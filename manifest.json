@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "ap-to-spec-extension",
+    "description": "Base extension",
+    "version": "1.0",
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "img/icon.jpg"
+    },
+    "icons": {
+        "16": "img/icon.jpg",
+        "48": "img/icon.jpg",
+        "128": "img/icon.jpg"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://g2.antv.antgroup.com/examples/*"],
+            "js": ["src/g2.min.js","src/main.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "sandbox": {
+        "pages": ["sandbox.html"]
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+  }
