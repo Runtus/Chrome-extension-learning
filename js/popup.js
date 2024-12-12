@@ -31,7 +31,6 @@ const main = async () => {
         active: true,
         currentWindow: true
     });
-    console.log("status",status)
     if (status) {
         const res = await chrome.tabs.sendMessage(tab.id, {
             message: "code"
@@ -42,10 +41,14 @@ const main = async () => {
             sandboxDom.contentWindow.postMessage(res.code, "*")
             console.log("send over")
         }, 500)
-        // window.postMessage = sandboxDom.contentWindow.postMessage;
-        
     }
 }
+
+// window.addEventListener("message", (e) => {
+//     if (e.data.tag === 'result') {
+//         console.log("result", e.data.options)
+//     }
+// })
 
 main();
 

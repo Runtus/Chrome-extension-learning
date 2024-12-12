@@ -9,8 +9,22 @@
   <script src="src/g2.min.js"></script>
   <script>
     window.addEventListener("message", function (event) {
-        console.log("sandbox.html received message:", event.data);
+        const code = event.data;
+        const Chart = G2.Chart;
+        let options;
+        const exec = `
+            ${code}
+            options = chart.options();
+        `
+
+        console.log('exec',exec);
+        eval(exec);
+        console.log(options);
+        // window.parent.postMessage({
+        //    tag: "result",
+        //    options: options.toString() 
+        // })
       });
-      
+
   </script>
 </html>

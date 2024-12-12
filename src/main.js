@@ -9,6 +9,7 @@
 //     })
 // })
 
+console.log("loading~~~~~");
 
 let loadStaus = false;
 let currentCode = '';
@@ -33,23 +34,33 @@ const transformCode = (e) => {
 
 
 const getCode = () => {
-    const dom = document.getElementsByClassName("view-line");
-    const codes = Array.from(dom)
-    if (codes.length === 0) {
+    const dom = document.getElementsByClassName("view-lines")[0];
+    const codes = dom ? Array.from(dom.children) : [];
+    const copyBtn = document.getElementsByClassName("ant-typography-copy")[0];
+    
+    if (codes.length === 0 || !copyBtn) {
         setTimeout(() => {
             getCode();
-        }, 1000)
+        }, 200)
+        console.log("加载失败，重新加载")
     } else {
-        loadStaus = true;
-        let str = '';
-        codes.slice(0, codes.length - 1).forEach(dom => {
-            const text = dom.children[0].innerText;
-            if (text.includes('chart.render();') || text.includes("@antv/g2")) {
-                return;
-            }
-            str += dom.children[0].innerText + '\n';
-        })
-        transformCode({detail: str})
+        console.log(dom.children)
+        copyBtn.click();
+        setTimeout(() => {
+            navigator.clipboard.readText().then(text => {
+                const code = text.split("\n").filter(str => {
+                    if (str.includes("chart.render()" || str.includes("import"))) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }).join("\n");
+                console.log("code", code);
+                transformCode({detail: code})
+            }).catch(err => {
+                console.error("请focus当前页面");
+            })
+        }, 500)
     }
 }
 

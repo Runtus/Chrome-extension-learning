@@ -14,8 +14,8 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://g2.antv.antgroup.com/examples/*"],
-            "js": ["src/g2.min.js","src/main.js"],
+            "matches": ["https://g2.antv.antgroup.com/*/examples/*", "https://g2.antv.antgroup.com/examples/*"],
+            "js": ["src/main.js"],
             "run_at": "document_end"
         }
     ],
